@@ -139,33 +139,36 @@ NSString * NgAppearanceStateAsString(NgKeyboardTrackerKeyboardAppearanceState st
 - (void)dealloc {
   [self stop];
 }
-- (UIView *)getKeyboardView {
-  
-  NSArray * windows = [UIApplication sharedApplication].windows;
-  if (windows.count <= 1) return nil;
-  
-  UIWindow * tmpwindow = windows[1];
-  UIView * keyboard = nil;
-  for (UIView * subview in tmpwindow.subviews) {
-    
-    if ([[subview description] containsString:@"<UIPeripheralHost"]) {
-      keyboard = subview;
-      break;
-    } else if ([[subview description] containsString:@"<UIInputSetContainerView"]) {
-      for (UIView * ssubview in subview.subviews) {
-        if ([[ssubview description] containsString:@"<UIInputSetHost"]) {
-          keyboard = ssubview;
-          break;
-        }
-      }
-      break;
-    }
-  }
-  return keyboard;
-}
+// Removing this method so this project can be built for iOS application extensions.
+// You must now start the tracker whenever the app is running.
+//- (UIView *)getKeyboardView {
+//
+//  NSArray * windows = [UIApplication sharedApplication].windows;
+//  if (windows.count <= 1) return nil;
+//
+//  UIWindow * tmpwindow = windows[1];
+//  UIView * keyboard = nil;
+//  for (UIView * subview in tmpwindow.subviews) {
+//
+//    if ([[subview description] containsString:@"<UIPeripheralHost"]) {
+//      keyboard = subview;
+//      break;
+//    } else if ([[subview description] containsString:@"<UIInputSetContainerView"]) {
+//      for (UIView * ssubview in subview.subviews) {
+//        if ([[ssubview description] containsString:@"<UIInputSetHost"]) {
+//          keyboard = ssubview;
+//          break;
+//        }
+//      }
+//      break;
+//    }
+//  }
+//  return keyboard;
+//}
 - (void)getInitialKeyboardInfo {
   
-  UIView * keyboardView = [self getKeyboardView];
+//  UIView * keyboardView = [self getKeyboardView];
+  UIView* keyboardView = nil;
   if (keyboardView) {
     _appearanceState = NgKeyboardTrackerKeyboardAppearanceStateShown;
     _beginFrame = [keyboardView convertRect:keyboardView.bounds toView:nil];
